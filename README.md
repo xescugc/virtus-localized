@@ -1,8 +1,8 @@
 # Virtus::Localized
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/virtus/localized`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status][travis-image]][travis-url]
 
-TODO: Delete this and the text above, and describe your gem
+Virtus::Localized is an extension for [virtus][travis-url] that adds the `localized` feature. It's based on the `localized` feature of [MongoID][mongoID-url] and was requested via this [issue][issue-url]
 
 ## Installation
 
@@ -22,13 +22,53 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You need to require it first:
 
-## Development
+```ruby
+  require 'virtus/localized'
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+Then it gives you the following flag when definig the `attribute`:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+  class Post
+    include Virtus.model
+
+    attribute :title, String, localized: true
+    attribute :body, String, localized: true
+  end
+
+```
+
+It uses the [i18n](https://github.com/svenfuchs/i18n) to detect the `locale` and creates an internal hash for the attribute:
+
+```ruby
+  post = Post.new(title: 'Hello', body: 'English')
+
+  p post.title
+  # => 'Hello'
+
+  p post.body
+  # => 'English'
+
+  I18n.locale = :es
+
+  post.title = 'Hola'
+  post.body = 'Español'
+
+  p post.title
+  # => 'Hola'
+
+  p post.body
+  # => 'Español'
+
+  p post.instance_variable_get('@title')
+  # { "en" => "Hello", "es" => "Hola" }
+
+  p post.instance_variable_get('@body')
+  # { "en" => "English", "es" => "Español" }
+
+```
 
 ## Contributing
 
@@ -37,3 +77,14 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## License
+
+[MIT](LICENSE)
+
+[travis-image]: https://travis-ci.org/XescuGC/virtus-localized.svg?branch=maste
+[travis-url]: https://travis-ci.org/XescuGC/virtus-localized
+[virtus-url]: https://github.com/solnic/virtus
+[mongoID-url]: https://travis-ci.org/XescuGC/virtus-localized
+[issue-url]: https://travis-ci.org/XescuGC/virtus-localized
+
