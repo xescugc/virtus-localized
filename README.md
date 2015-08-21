@@ -82,7 +82,7 @@ It uses the [i18n](https://github.com/svenfuchs/i18n) to detect the `locale` and
 
 [MIT](LICENSE)
 
-[travis-image]: https://travis-ci.org/XescuGC/virtus-localized.svg?branch=maste
+[travis-image]: https://travis-ci.org/XescuGC/virtus-localized.svg?branch=master
 [travis-url]: https://travis-ci.org/XescuGC/virtus-localized
 [virtus-url]: https://github.com/solnic/virtus
 [mongoID-url]: https://travis-ci.org/XescuGC/virtus-localized
